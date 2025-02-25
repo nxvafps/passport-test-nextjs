@@ -1,7 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  api: {
+    bodyParser: true,
+  },
+  compiler: {
+    styledComponents: true,
+  },
 };
 
 export default nextConfig;
