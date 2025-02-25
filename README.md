@@ -13,7 +13,7 @@ This project demonstrates a Next.js application with custom authentication using
 1. Clone the repository and install dependencies:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/nxvafps/passport-test-nextjs
 cd test-project
 npm install
 ```
