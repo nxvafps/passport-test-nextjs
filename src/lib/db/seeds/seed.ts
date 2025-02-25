@@ -1,7 +1,31 @@
-const crypto = require("crypto");
-const { pool } = require("../connection");
+import crypto from "crypto";
+import connection from "../connection";
+const { pool } = connection;
 
-const seed = async () => {
+interface User {
+  id: number;
+  username: string;
+  hashed_password: Buffer;
+  salt: Buffer;
+  name?: string;
+  email?: string;
+  email_verified?: boolean;
+}
+
+interface FederatedCredential {
+  id: number;
+  user_id: number;
+  provider: string;
+  subject: string;
+}
+
+interface Session {
+  sid: string;
+  sess: object;
+  expire: Date;
+}
+
+const seed = async (): Promise<void> => {
   await pool.query(`
     DROP TABLE IF EXISTS todos CASCADE;
     DROP TABLE IF EXISTS federated_credentials CASCADE;
@@ -34,8 +58,8 @@ const seed = async () => {
     );
   `);
 
-  const salt = crypto.randomBytes(16);
-  const hashedPassword = crypto.pbkdf2Sync(
+  const salt: Buffer = crypto.randomBytes(16);
+  const hashedPassword: Buffer = crypto.pbkdf2Sync(
     "letmein123",
     salt,
     310000,
@@ -43,7 +67,7 @@ const seed = async () => {
     "sha256"
   );
 
-  await pool.query(
+  (await pool.query)<User>(
     `
     INSERT INTO users (username, hashed_password, salt)
     VALUES ($1, $2, $3)
@@ -53,4 +77,4 @@ const seed = async () => {
   );
 };
 
-module.exports = seed;
+export default seed;

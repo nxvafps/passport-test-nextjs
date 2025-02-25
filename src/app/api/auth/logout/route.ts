@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { pool } from "@/lib/db/connection";
+import connection from "@/lib/db/connection";
+const { pool } = connection;
 
 export async function POST(request: NextRequest) {
   try {

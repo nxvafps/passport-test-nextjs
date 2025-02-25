@@ -1,4 +1,5 @@
-import { pool } from "../connection";
+import connection from "../connection";
+const { pool } = connection;
 import crypto from "crypto";
 
 export async function verifyUser(username: string, password: string) {

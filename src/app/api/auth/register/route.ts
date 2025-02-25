@@ -16,7 +16,6 @@ export async function POST(request: Request) {
     return NextResponse.json(user);
   } catch (error: any) {
     if (error.code === "23505") {
-      // PostgreSQL unique violation error
       return NextResponse.json(
         { error: "Username already exists" },
         { status: 409 }
